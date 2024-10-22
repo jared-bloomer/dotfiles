@@ -6,7 +6,6 @@ export HISTSIZE=
 export TFENV_ARCH=amd64 #Require for Terraform on m1 macbooks
 export CAI_ARTIFACTORY_USER=''
 export JAVA_HOME='/opt/homebrew/opt/openjdk/libexec/openjdk.jdk/Contents/Home/'
-export PIP_INDEX_URL=https://${CAI_ARTIFACTORY_USER}:${CAI_ARTIFACTORY_TOKEN}@artifactory.coxautoinc.com/artifactory/api/pypi/cai-pypi/simple
 export AWS_DEFAULT_REGION='us-east-1'
 
 gitup ()
@@ -80,8 +79,8 @@ usersearch() {
 	echo -n "Enter the Last name of the user to search for: "
 	read LUSER
 	LDAPHOST="0.0.0.0"
-	BINDDN="CN=$LDAPUSER"',OU=Users,OU=_MSC,OU=Manheim Auctions,OU=_Business Units,DC=man,DC=co'
-	BASEDN='OU=_Business Units,DC=man,DC=co'
+	BINDDN="CN=$LDAPUSER"',OU=Users,DC=example,DC=com'
+	BASEDN='OU=Users,DC=example,DC=com'
 	SEARCHSTRING="(&(sn=$LUSER)(givenName=$FUSER))"
     LDAPOPTS="-x -h $(echo $LDAPHOST) -D $(echo $BINDDN) -b $(echo $BASEDN) -W \"$(echo $SEARCHSTRING)\""
     set -x
