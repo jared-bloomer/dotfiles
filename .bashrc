@@ -169,3 +169,7 @@ eval "$(pyenv init -)"
 
 # Created by `pipx` on 2024-02-28 15:34:54
 export PATH="$PATH:/Users/jared.bloomer/.local/bin"
+
+eval "$(starship init bash)"
+export STARSHIP_CONFIG="~/.config/starship.toml"
+
