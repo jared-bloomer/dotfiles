@@ -67,6 +67,7 @@ alias tf1-1-9='docker run --platform linux/amd64 -it -e AWS_ACCESS_KEY_ID -e AWS
 alias tf1-2-9='docker run -it -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e AWS_SESSION_TOKEN -e AWS_SESSION_EXPIRES -v ~/.ssh:/root/.ssh --mount type=bind,source=$(pwd),target=/app -w /app hashicorp/terraform:1.2.9'
 alias java11='sdk use java 11.0.2-open'
 alias java18='sdk use java 18.0.2-open'
+alias diff='diff -y'
 
 if [ -d $HOME/.aliases ]; then
     if [ -d $HOME/.aliases/awscli ]; then
