@@ -1,0 +1,78 @@
+{
+  "name": "Local Assistant",
+  "version": "1.0.0",
+  "schema": "v1",
+  "models": [
+    {
+      "name": "CodeGeex-9b",
+      "provider": "ollama",
+      "model": "codegeex4:9b",
+      "apiBase": "http://192.168.0.1:11434",
+      "roles": [
+        "autocomplete",
+        "chat",
+        "edit", 
+        "apply", 
+        "summarize"
+      ],
+      "completionOptions": { },
+    },
+    {
+      "name": "Openchat-7b",
+      "provider": "ollama",
+      "model": "openchat:7b",
+      "apiBase": "http://192.168.0.1:11434",
+      "roles": [
+        "autocomplete",
+        "chat",
+        "edit", 
+        "apply", 
+        "summarize"
+      ],
+      "completionOptions": { },
+    }
+  ],
+  "contextProviders": [
+    {
+      "name": "file",
+      "params": { }
+    },
+    {
+      "name": "folder",
+      "params": { }
+    },
+    {
+      "name": "currentFile",
+      "params": { }
+    },
+    {
+      "name": "diff",
+      "params": { }
+    },
+    {
+      "name": "open",
+      "params": { }
+    },
+    {
+      "name": "terminal",
+      "params": { }
+    },
+    {
+      "name": "problems",
+      "params": { }
+    },
+    {
+      "name": "codebase",
+      "params": { }
+    },
+    {
+      "name": "code",
+      "params": { }
+    },
+    {
+      "name": "docs",
+      "params": { }
+    }
+  ],
+  "allowAnonymousTelemetry": false
+}

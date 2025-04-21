@@ -1,1 +1,3 @@
 .workrc
+.continue/index/*
+.continue/logs/*
