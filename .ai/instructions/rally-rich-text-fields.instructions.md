@@ -1,5 +1,11 @@
 ---
-applyTo: "**"
+applyTo: '**'
+title: Rally Rich Text Fields
+description: This document provides a comprehensive guide to the HTML tags supported in Rally's Rich Text Fields.
+author: "Jared Bloomer"
+creation_date: "2025-08-22"
+version: "1.0.0"
+type: ai-interaction
 ---
 
 # Rally Rich Text Fields - HTML Formatting Guide

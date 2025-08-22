@@ -1,5 +1,11 @@
 ---
 applyTo: "**"
+title: Assumption Guidelines
+description: Guidlelines on when and when not to make assumptions as well as how to make assumptions.
+author: "Jared Bloomer"
+creation_date: "2025-08-22"
+version: "1.0.0"
+type: ai-interaction
 ---
 
 # Assumptions
@@ -9,7 +15,8 @@ applyTo: "**"
 When working within a project/feature, some details may not be clear. This document serves as a guide of how to handle these situations
 
 ## Constraints
-- DO NOT under any circumstances make any assumptions
+- DO NOT under any circumstances make any assumptions, unless there is no path forward. 
+  - When no path forward is clear, follow the process defined below in the [When Assumptions MUST be made](#When-Assumptions-MUST-be-made) section of this document.
 - If details are not clear, prompt the user for additional detail/context, or to provide an example.
   - An Example of this would be
     - Scenario: Code is calling an external API

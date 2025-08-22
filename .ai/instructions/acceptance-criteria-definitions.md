@@ -1,5 +1,11 @@
 ---
 applyTo: "**"
+title: Acceptance Criteria Definition Standards
+description: Standards to use use when defining acceptance criteria for work.
+author: "Jared Bloomer"
+creation_date: "2025-08-22"
+version: "1.0.0"
+type: ai-interaction
 ---
 
 # Acceptance Criteria Definitions

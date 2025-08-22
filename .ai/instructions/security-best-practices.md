@@ -1,5 +1,11 @@
 ---
 applyTo: '**'
+title: Security Best Practices
+description: Framework for maintaining Security during the Development Process
+author: "Jared Bloomer"
+creation_date: "2025-08-22"
+version: "1.0.0"
+type: ai-interaction
 ---
 
 # Security Best Practices

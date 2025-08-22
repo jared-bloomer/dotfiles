@@ -1,5 +1,11 @@
 ---
 applyTo: '**'
+title: Error Handling Standards
+description: Patterns For Best Practices For Error Handling
+author: "Jared Bloomer"
+creation_date: "2025-08-22"
+version: "1.0.0"
+type: ai-interaction
 ---
 
 # Error Handling Standards
