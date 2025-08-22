@@ -16,3 +16,4 @@ To provide a detailed Pull Request Description in markdown code format for the u
 - Detailed Changes should be listed after the high level description
 
 ### Extended Guidance
+- If an MCP tool creates the pull request, the URL for the pull request should be included in the `implementation-progress.md` file
