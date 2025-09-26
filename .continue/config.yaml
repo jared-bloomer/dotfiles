@@ -1,78 +1,260 @@
-{
-  "name": "Local Assistant",
-  "version": "1.0.0",
-  "schema": "v1",
-  "models": [
-    {
-      "name": "CodeGeex-9b",
-      "provider": "ollama",
-      "model": "codegeex4:9b",
-      "apiBase": "http://192.168.0.1:11434",
-      "roles": [
-        "autocomplete",
-        "chat",
-        "edit", 
-        "apply", 
-        "summarize"
-      ],
-      "completionOptions": { },
-    },
-    {
-      "name": "Openchat-7b",
-      "provider": "ollama",
-      "model": "openchat:7b",
-      "apiBase": "http://192.168.0.1:11434",
-      "roles": [
-        "autocomplete",
-        "chat",
-        "edit", 
-        "apply", 
-        "summarize"
-      ],
-      "completionOptions": { },
-    }
-  ],
-  "contextProviders": [
-    {
-      "name": "file",
-      "params": { }
-    },
-    {
-      "name": "folder",
-      "params": { }
-    },
-    {
-      "name": "currentFile",
-      "params": { }
-    },
-    {
-      "name": "diff",
-      "params": { }
-    },
-    {
-      "name": "open",
-      "params": { }
-    },
-    {
-      "name": "terminal",
-      "params": { }
-    },
-    {
-      "name": "problems",
-      "params": { }
-    },
-    {
-      "name": "codebase",
-      "params": { }
-    },
-    {
-      "name": "code",
-      "params": { }
-    },
-    {
-      "name": "docs",
-      "params": { }
-    }
-  ],
-  "allowAnonymousTelemetry": false
-}
+name: Ollama
+version: 1.0.0
+schema: v1
+models:
+  # - uses: google/gemini-2.5-pro
+  #   with:
+  #     GEMINI_API_KEY: <GEMINI_API_KEY>
+  # - uses: google/gemini-2.0-flash
+  #   with:
+  #     GEMINI_API_KEY: <GEMINI_API_KEY>
+  # - name: gemma-3n-e4b-it
+  #   provider: gemini
+  #   model: gemma-3n-e4b-it
+  #   apiKey: <GEMINI_API_KEY>
+  - name: Mistral
+    provider: ollama
+    apiBase: http://0.0.0.0:11434
+    model: mistral:7b
+    roles:
+      - chat
+      - summarize
+    capabilities:
+      - tool_use
+  - name: Deepseek-R1
+    provider: ollama
+    apiBase: http://0.0.0.0:11434
+    model: deepseek-r1:7b
+    roles:
+      - chat
+      - edit
+      - apply
+      - summarize
+    capabilities:
+      - tool_use
+  - name: codellama
+    provider: ollama
+    apiBase: http://0.0.0.0:11434
+    model: codellama:7b
+    roles:
+      - chat
+      - edit
+      - apply
+      - summarize
+    capabilities:
+      - tool_use
+  - name: QWEN 2.5 Coder
+    provider: ollama
+    apiBase: http://0.0.0.0:11434
+    model: qwen2.5-coder:7b-base-q5_0
+    roles:
+      - chat
+      - edit
+      - apply
+      - summarize
+    capabilities:
+      - tool_use
+  - name: Starcoder2
+    provider: ollama
+    apiBase: http://0.0.0.0:11434
+    model: starcoder2:3b
+    roles:
+      - autocomplete
+context:
+  - provider: code
+  - provider: docs
+  - provider: diff
+  - provider: terminal
+  - provider: problems
+  - provider: folder
+  - provider: codebase
+  - provider: clipboard
+  - provider: debugger
+  - provider: os
+rules:
+  - name: Container-First-Development
+    rule: |
+      Apply container first architecture principles
+      All code must be built for running in a containerized environment.
+      - All configuration parameters must be exposed via ENV variables
+      - Secret Management must be supported (i.e. using docker secrets)
+      - All applications must be packaged as an image that do not require building to be used
+      - All containers/applications must be both horizontally and vertically scalable.
+  - name: Test-Driven-Development
+    rule: |
+      Apply test-driven development principles
+      TDD is mandatory with strict enforcement:
+      - Tests written FIRST → User approved → Tests MUST FAIL → Then implement
+      - Red-Green-Refactor cycle strictly enforced with git commit verification
+      - Test order: Contract → Integration → E2E → Unit
+      - Real dependencies required - no mocks for external services
+      - Breaking this principle results in immediate code review rejection
+      - Minimum 80% code coverage for core functionality
+  - name: Observability-First
+    rule: |
+      All code MUST include:
+      - Structured logging with consistent format (JSON in production)
+      - Request/response logging for all API endpoints
+      - Performance metrics collection (latency, throughput)
+      - Error context with sufficient debugging information
+      - Multi-tier log streaming (local → backend → monitoring)
+      - Health check endpoints for all services
+  - name: Semantic-Versioning-&-Breaking-Changes
+    rule: |
+      Version management follows strict rules:
+      - MAJOR.MINOR.PATCH format with BUILD increments
+      - BUILD number increments on EVERY change
+      - Breaking changes require MAJOR version bump
+      - Parallel testing during breaking changes
+      - Migration plans documented before implementation
+      - Backward compatibility maintained for 2 major versions
+  - name: Universal-Interface-Requirements
+    rule: |
+      - Clear Contract: Explicit input/output specifications with validation
+      - Error Handling: Consistent error responses with meaningful context
+      - Versioning: Semantic versioning with backward compatibility guarantees
+      - Documentation: API documentation with examples and error cases
+      - Observability: Logging, metrics, and health checks appropriate to interface type
+      - Security: Authentication, authorization, and data protection measures
+  - name: Interface-Type-Standards
+    rule: |
+      - REST API: OpenAPI specification, JSON responses, HTTP status codes, rate limiting
+      - GraphQL API: Schema definition, introspection enabled, query complexity analysis
+      - SDK/Library: Type-safe interfaces, dependency injection support, configuration objects
+      - Event-Driven: Schema registry, dead letter queues, idempotency guarantees
+      - UI Components: Component contracts, accessibility compliance, responsive design
+      - Message Queue: Schema validation, retry policies, monitoring dashboards
+      - CLI Interface: Text in/out protocol, JSON/text formats, standard flags (--help, --version)
+  - name: Definition-of-Done
+    rule: |
+      - Tests must enforce **acceptance criteria**.
+      - Tests passing (component + system)
+      - Schemas updated/validated if payloads changed
+      - Preview evidence (if applicable) attached
+      - Human review approved
+  - name: Decision-Records-(ADRs)
+    rule: |
+      - All architectural decisions must be documented
+      - ADRs must include context, consequences, and alternatives
+      - ADRs must be linked to relevant code changes
+      - Review process for ADRs must be defined
+      - Record significant decisions under `docs/architecture/adr/NNNN-title.md`.
+      - Do not rewrite old ADRs; supersede with a new one if the decision changes.
+  - name: Clean-Workspace
+    rule: |
+      A clean and maintainable workspace must be maintained at all times
+      - Remove unused files and dependencies
+      - Organize code into appropriate directories
+      - Update documentation to reflect current state
+      - Ensure no sensitive information is exposed
+      - Avoid creating multiple files for the same thing
+      - Avoid duplication
+      - Remove temporary files when no longer needed
+  - name: Privacy-by-Design
+    rule: |
+      - Data Minimization: Collect only necessary data
+      - Anonymization: Remove personally identifiable information (PII)
+      - Encryption: Encrypt sensitive data at rest and in transit (when feature is enabled)
+      - Access Controls: Implement role-based access controls (RBAC)
+      - Compliance: Adhere to relevant data protection regulations (e.g., GDPR, CCPA)
+      - Transparency: Inform users about data collection and usage practices
+      - Purpose Limitation: Use data only for stated purposes
+      - Retention Policies: Automated data lifecycle management and deletion
+      - Consent Management: Granular consent with easy withdrawal mechanisms
+  - name: Implementation-Requirements
+    rule: |
+      - Environment-based secret management (no hardcoded credentials)
+      - Input validation at every boundary (API, CLI, file upload)
+      - Authentication tokens with proper expiration and refresh
+      - CORS configuration restricted to known origins
+      - SQL injection prevention via parameterized queries only
+      - File upload restrictions (type, size, malware scanning)
+      - Security headers enforced: CSP, HSTS, X-Frame-Options, X-Content-Type-Options
+  - name: Authorization-Patterns
+    rule: |
+      - Role-Based Access Control (RBAC): User roles with assigned permissions
+      - Attribute-Based Access Control (ABAC): Fine-grained attribute evaluation
+      - Relationship-Based Access Control (ReBAC): Graph-based permission modeling
+      - Just-in-Time (JIT) Access: Temporary elevated permissions with approval workflow
+      - Zero Trust Network Access (ZTNA): Network-level access control based on identity
+  - name: Session-Management
+    rule: |
+      - Secure Cookie Attributes: HttpOnly, Secure, SameSite
+      - Token-Based Authentication: JWT with short expiration and refresh tokens
+      - Session Expiry: Automatic logout after inactivity period
+      - Multi-Factor Authentication (MFA): Optional/mandatory for sensitive actions
+      - Session Revocation: Immediate invalidation on logout or password change
+      - Monitoring and Alerts: Unusual session activity detection
+      - Session Rotation: Generate new session ID after authentication
+      - Concurrent Session Limits: Limit active sessions per user
+      - Session Invalidation: Logout from all devices functionality
+  - name: Input-Validation
+    rule: |
+      - Server-side Validation: Never trust client-side validation
+      - Input Whitelisting: Allow only known good input patterns
+      - Data Type Validation: Ensure correct data types and ranges
+      - Encoding/Escaping: Proper encoding for different contexts (HTML, SQL, JavaScript)
+      - File Upload Security: Validate file types, scan for malware, size limitations
+  - name: SQL-Injection-Prevention
+    rule: |
+      - Parameterized Queries: Use prepared statements and parameter binding
+      - ORM Usage: Leverage Object-Relational Mapping frameworks
+      - Input Validation: Validate and sanitize all user inputs
+      - Least Privilege: Database users with minimal required permissions
+      - SQL Injection Testing: Regular automated and manual testing
+  - name: Cross-Site-Scripting-(XSS)-Protection
+    rule: |
+      - Content Security Policy (CSP): Restrict resource loading and execution
+      - Output Encoding: Encode output based on context (HTML, JavaScript, CSS)
+      - Input Validation: Validate and sanitize user inputs
+      - Secure Templating: Use templating engines with auto-escaping
+      - X-XSS-Protection Header: Browser-based XSS protection
+  - name: Cross-Site-Request-Forgery-(CSRF)-Protection
+    rule: |
+      - CSRF Tokens: Synchronizer token pattern for state-changing operations
+      - SameSite Cookies: Use SameSite=Strict or SameSite=Lax
+      - Double Submit Cookies: CSRF token in both cookie and request parameter
+      - Custom Headers: Require custom headers for AJAX requests
+      - Referer Validation: Validate HTTP Referer header for additional protection
+  - name: API-Security
+    rule: |
+      - Rate Limiting: Prevent abuse and DoS attacks
+      - API Keys: Secure API key generation, rotation, and validation
+      - OAuth 2.1: Modern authorization framework for API access
+      - Input Validation: Validate all API inputs and parameters
+      - Error Handling: Avoid information disclosure in error messages
+  - name: Container-Security
+    rule: |
+      - Base Image Security: Use minimal, security-hardened base images
+      - Image Scanning: Vulnerability scanning in CI/CD pipeline
+      - Runtime Security: Monitor container behavior for anomalies
+      - Resource Limits: CPU, memory, and storage constraints
+      - Non-root Execution: Run containers as non-privileged users
+  - name: Infrastructure-as-Code-(IaC)-Security
+    rule: |
+      - Security Scanning: Scan IaC templates for misconfigurations
+      - Policy as Code: Automated compliance checking
+      - Secret Detection: Prevent hardcoded secrets in code
+      - Access Control: Restrict who can modify infrastructure code
+      - Audit Trails: Track all infrastructure changes
+  - name: Data-Classification-&-Handling
+    rule: |
+      - Data Classification: Categorize data based on sensitivity (Public, Internal, Confidential, Restricted)
+      - Data Labeling: Tag data with appropriate classification labels
+      - Handling Procedures: Define procedures for each classification level
+      - Data Lifecycle: Manage data from creation to destruction
+      - Data Loss Prevention (DLP): Monitor and prevent unauthorized data exfiltration
+  - name: GDPR-(General-Data-Protection-Regulation)
+    rule: |
+      - Data Mapping: Inventory of personal data processing activities
+      - Consent Management: Granular consent collection and management
+      - Right to Erasure: Data deletion upon user request
+      - Data Portability: Export user data in machine-readable format
+      - Privacy by Design: Build privacy protections into systems
+  - name: CCPA-(California-Consumer-Privacy-Act)
+    rule: |
+      - Consumer Rights: Access, deletion, and opt-out rights
+      - Data Sale Disclosure: Transparency about data sharing practices
+      - Non-discrimination: No penalties for exercising privacy rights
+      - Third-party Disclosure: Clear disclosure of data sharing
+      - Verification Procedures: Identity verification for data requests
