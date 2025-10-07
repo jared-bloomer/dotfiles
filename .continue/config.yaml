@@ -19,41 +19,44 @@ models:
     roles:
       - chat
       - summarize
-    capabilities:
-      - tool_use
+    capabilities: [tool_use]
   - name: Deepseek-R1
     provider: ollama
     apiBase: http://0.0.0.0:11434
     model: deepseek-r1:7b
     roles:
+      - apply
       - chat
       - edit
-      - apply
+      - embed
       - summarize
-    capabilities:
-      - tool_use
+      - rerank
+    capabilities: [tool_use]
   - name: codellama
     provider: ollama
     apiBase: http://0.0.0.0:11434
     model: codellama:7b
     roles:
+      - apply
       - chat
       - edit
-      - apply
+      - embed
       - summarize
-    capabilities:
-      - tool_use
+      - rerank
+    capabilities: [tool_use]
   - name: QWEN 2.5 Coder
     provider: ollama
     apiBase: http://0.0.0.0:11434
-    model: qwen2.5-coder:7b-base-q5_0
+    model: qwen2.5-coder:7b
+    contextLength: 131072
     roles:
+      - apply
       - chat
       - edit
-      - apply
+      - embed
       - summarize
-    capabilities:
-      - tool_use
+      - rerank
+    capabilities: [tool_use]
   - name: Starcoder2
     provider: ollama
     apiBase: http://0.0.0.0:11434
