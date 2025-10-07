@@ -61,15 +61,26 @@ models:
     roles:
       - autocomplete
 context:
+  - provider: file
   - provider: code
-  - provider: docs
+  - provider: currentFile
   - provider: diff
   - provider: terminal
   - provider: problems
-  - provider: folder
-  - provider: codebase
+  - provider: open
+    params:
+      onlyPinned: false
+  - provider: tree
+  - provider: search
+    params:
+      maxResults: 100
+  - provider: repo-map
+    params:
+      includeSignatures: true
   - provider: clipboard
   - provider: debugger
+    params:
+      stackDepth: 3
   - provider: os
 rules:
   - name: Container-First-Development
@@ -258,3 +269,7 @@ rules:
       - Non-discrimination: No penalties for exercising privacy rights
       - Third-party Disclosure: Clear disclosure of data sharing
       - Verification Procedures: Identity verification for data requests
+mcpServers: 
+  - name: ollama-mcp
+    command: "C:\\Users\\<username>\\AppData\\Roaming\\ollama-mcp\\ollama-mcp.exe"
+    args: ["--stdio", "--log-level", "error"]
